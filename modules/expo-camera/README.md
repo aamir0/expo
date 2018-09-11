@@ -249,6 +249,7 @@ Takes a picture and saves it to app's cache directory. Photos are rotated to mat
   * **quality (_number_)** -- Specify the quality of compression, from 0 to 1. 0 means compress for small size, 1 means compress for maximum quality.
   * **base64 (_boolean_)** -- Whether to also include the image data in Base64 format.
   * **exif (_boolean_)** -- Whether to also include the EXIF data for the image.
+  * **doNotSave (_boolean_)** -- Whether to skip saving the image to cache and retrieving the URI.
 
 #### Returns
 

@@ -32,6 +32,7 @@ public class ResolveTakenPictureAsyncTask extends AsyncTask<Void, Void, Bundle> 
   private static final String EXTENSION = ".jpg";
 
   private static final String SKIP_PROCESSING_KEY = "skipProcessing";
+  private static final String SKIP_CACHE_SAVE_KEY = "doNotSave";
   private static final String FAST_MODE_KEY = "fastMode";
   private static final String QUALITY_KEY = "quality";
   private static final String BASE64_KEY = "base64";
@@ -164,12 +165,15 @@ public class ResolveTakenPictureAsyncTask extends AsyncTask<Void, Void, Bundle> 
       imageStream.write(mImageData);
 
       // write compressed image to file in cache directory
-      String filePath = writeStreamToFile(imageStream);
-      File imageFile = new File(filePath);
+      if (!isOptionEnabled(SKIP_CACHE_SAVE_KEY))
+      {
+        String filePath = writeStreamToFile(imageStream);
+        File imageFile = new File(filePath);
 
-      // handle image uri
-      String fileUri = Uri.fromFile(imageFile).toString();
-      response.putString(URI_KEY, fileUri);
+        // handle image uri
+        String fileUri = Uri.fromFile(imageFile).toString();
+        response.putString(URI_KEY, fileUri);
+      }
 
       // read exif information
       ExifInterface exifInterface = new ExifInterface(filePath);

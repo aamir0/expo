@@ -206,7 +206,9 @@ EX_EXPORT_METHOD_AS(takePicture,
       NSData *photoData = UIImageJPEGRepresentation(generatedPhoto, quality);
     
       NSMutableDictionary *response = [[NSMutableDictionary alloc] init];
-      response[@"uri"] = [EXCameraUtils writeImage:photoData toPath:path];
+      if (![options[@"doNotSave"] boolValue]) {
+        response[@"uri"] = [EXCameraUtils writeImage:photoData toPath:path];
+      }
       response[@"width"] = @(generatedPhoto.size.width);
       response[@"height"] = @(generatedPhoto.size.height);
       if ([options[@"base64"] boolValue]) {

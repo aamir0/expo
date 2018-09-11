@@ -374,7 +374,9 @@ static NSDictionary *defaultFaceDetectorOptions = nil;
     NSString *path = [self.fileSystem generatePathInDirectory:[self.fileSystem.cachesDirectory stringByAppendingPathComponent:@"Camera"] withExtension:@".jpg"];
 
     NSMutableDictionary *response = [[NSMutableDictionary alloc] init];
-    response[@"uri"] = [EXCameraUtils writeImage:takenImageData toPath:path];
+    if (![options[@"doNotSave"] boolValue]) {
+      response[@"uri"] = [EXCameraUtils writeImage:takenImageData toPath:path];
+    }
     response[@"width"] = @(takenImage.size.width);
     response[@"height"] = @(takenImage.size.height);
 
